@@ -1,5 +1,5 @@
 sdltest:main.o SDLHelper.o
-	g++ main.o -o sdltest `sdl2-config --libs`
+	g++ main.o SDLHelper.o -o sdltest `sdl2-config --libs`
 
 main.o:main.cpp
 	g++ -c main.cpp -o main.o `sdl2-config --cflags`
