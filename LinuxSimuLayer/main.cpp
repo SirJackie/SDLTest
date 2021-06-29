@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include "SDLHelper.h"
 #include <SDL.h>
+#include <stdlib.h>
 
 #define SCREEN_WIDTH  640
 #define SCREEN_HEIGHT 480
@@ -9,13 +10,11 @@ LSM_SDLHelper sdlHelper;
 
 bool quit = false;
 SDL_Event e;
-SDL_DisplayMode* dmode = NULL;
 
 int main( int argc, char* args[] )
 {
-    sdlHelper.CreateWindow(10, 10, SCREEN_WIDTH, SCREEN_HEIGHT, "Test");
-
-    // printf("Width: %d; Height: %d;\n", width, height);
+    // sdlHelper = LSM_SDLHelper();
+    sdlHelper.CreateWindow("Test");
 
     //当程序正在运行
     while(!quit)

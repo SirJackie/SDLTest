@@ -4,13 +4,39 @@
 LSM_SDLHelper::LSM_SDLHelper(){
     window = NULL;
     screenSurface = NULL;
+
+    SDL_DisplayMode m;
+
+    // Make sure we have the right to get resolution (important!)
+    system("sudo chmod 777 /dev/fb0");
+
+    // Get Resolution
+    SDL_GetDesktopDisplayMode(0, &m);
+
+    screenWidth = m.w;
+    screenHeight = m.h;
+
+    windowWidth = 640;
+    windowHeight = 480;
+    leftMargin = 10;
+    topMargin = 10;
+
+    printf("%d, %d\n", m.w, m.h);
+
+    // unit = screenHeight / 30;
+
+	// windowHeight = 26 * unit;
+	// windowWidth = CS_iclamp(0, windowHeight / 9 * 16, screenWidth - 10);
+
+	// leftMargin = (screenWidth - windowWidth) / 2;
+	// topMargin = (screenHeight - windowHeight) / 2;
 }
 
-void LSM_SDLHelper::CreateWindow
-(
-    int leftMargin, int topMargin, int width, int height, const char* title
-)
-{
+void LSM_SDLHelper::GetResolution(){
+    ;
+}
+
+void LSM_SDLHelper::CreateWindow(const char* title){
     window = NULL;
     screenSurface = NULL;
 
@@ -25,8 +51,8 @@ void LSM_SDLHelper::CreateWindow
         title,
         leftMargin,
         topMargin,
-        width,
-        height,
+        windowWidth,
+        windowHeight,
         SDL_WINDOW_SHOWN
     );
 
