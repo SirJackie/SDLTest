@@ -1,5 +1,9 @@
+# -I /usr/include/SDL2     Header Files
+# -D_REENTRANT
+# -l SDL2
+
 sdltest:main.cpp
-	g++ main.cpp -o sdltest `sdl2-config --cflags --libs`
+	g++ main.cpp -o sdltest -I /usr/include/SDL2 -D_REENTRANT -l SDL2
 
 .PHONY:
 clear:
