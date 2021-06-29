@@ -1,14 +1,22 @@
 #include "SDLHelper.h"
+#include <SDL.h>
 
-SDL_Window* CreateWindow(int leftMargin, int topMargin, int width, int height, const char* title)
+LSM_SDLHelper::LSM_SDLHelper(){
+    window = NULL;
+    screenSurface = NULL;
+}
+
+void LSM_SDLHelper::CreateWindow
+(
+    int leftMargin, int topMargin, int width, int height, const char* title
+)
 {
-    SDL_Window* window = NULL;
+    window = NULL;
+    screenSurface = NULL;
 
     // 初始化 SDL
-    if(SDL_Init(SDL_INIT_VIDEO) < 0)
-    {
+    if(SDL_Init(SDL_INIT_VIDEO) < 0){
         printf("SDL could not initialize! SDL_Error: %s\n", SDL_GetError());
-        return window;
     }
 
     // 创建 Window
@@ -23,20 +31,17 @@ SDL_Window* CreateWindow(int leftMargin, int topMargin, int width, int height, c
     );
 
     // 检测 Window 是否可用
-    if(window == NULL)
-    {
+    if(window == NULL){
         printf("Window could not be created! SDL_Error: %s\n", SDL_GetError());
-        return window;
     }
 
-    return window;
+    screenSurface = SDL_GetWindowSurface(window);
+    if(screenSurface == NULL){
+        printf("ScreenSurface could not be gotten! SDL_Error: %s\n", SDL_GetError());
+    }
 }
 
-SDL_Surface* GetWindowSurface(SDL_Window* window){
-    return SDL_GetWindowSurface(window);
-}
-
-SDL_Surface* LoadMedia(const char* bmpAddress)
+SDL_Surface* LSM_SDLHelper::LoadMedia(const char* bmpAddress)
 {
     //载入 splash image
     SDL_Surface* media = SDL_LoadBMP(bmpAddress);
@@ -48,12 +53,11 @@ SDL_Surface* LoadMedia(const char* bmpAddress)
     return media;
 }
 
-void ReleaseMedia(SDL_Surface* media){
+void LSM_SDLHelper::ReleaseMedia(SDL_Surface* media){
     SDL_FreeSurface(media);
 }
 
-void Close(SDL_Window* window)
+void LSM_SDLHelper::Close()
 {
     SDL_DestroyWindow(window);
-    SDL_Quit();
 }

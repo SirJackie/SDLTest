@@ -1,11 +1,11 @@
 #include <stdio.h>
 #include "SDLHelper.h"
+#include <SDL.h>
 
 #define SCREEN_WIDTH  640
 #define SCREEN_HEIGHT 480
 
-SDL_Window* gWindow = NULL;
-SDL_Surface* gScreenSurface = NULL;
+LSM_SDLHelper sdlHelper;
 
 SDL_Surface* gHelloWorld = NULL;
 SDL_Surface* gUp = NULL;
@@ -29,15 +29,14 @@ KeyboardState kb = RELEASE;
 
 int main( int argc, char* args[] )
 {
-    gWindow = CreateWindow(10, 10, SCREEN_WIDTH, SCREEN_HEIGHT, "Test");
-    gScreenSurface = GetWindowSurface(gWindow);
+    sdlHelper.CreateWindow(10, 10, SCREEN_WIDTH, SCREEN_HEIGHT, "Test");
 
     //加载多媒体文件
-    gUp = LoadMedia("./Bitmaps/Up.bmp");
-    gDown = LoadMedia("./Bitmaps/Down.bmp");
-    gLeft = LoadMedia("./Bitmaps/Left.bmp");
-    gRight = LoadMedia("./Bitmaps/Right.bmp");
-    gRelease = LoadMedia("./Bitmaps/hw.bmp");
+    gUp = sdlHelper.LoadMedia("./Bitmaps/Up.bmp");
+    gDown = sdlHelper.LoadMedia("./Bitmaps/Down.bmp");
+    gLeft = sdlHelper.LoadMedia("./Bitmaps/Left.bmp");
+    gRight = sdlHelper.LoadMedia("./Bitmaps/Right.bmp");
+    gRelease = sdlHelper.LoadMedia("./Bitmaps/hw.bmp");
 
     gHelloWorld = gRelease;
 
@@ -90,20 +89,21 @@ int main( int argc, char* args[] )
         }
         
         //应用图像
-        SDL_BlitSurface( gHelloWorld, NULL, gScreenSurface, NULL );
+        SDL_BlitSurface( gHelloWorld, NULL, sdlHelper.screenSurface, NULL );
 
         //更新surface
-        SDL_UpdateWindowSurface( gWindow );
+        SDL_UpdateWindowSurface(sdlHelper.window);
     }
 
     //释放资源并关闭SDL
-    ReleaseMedia(gUp);
-    ReleaseMedia(gDown);
-    ReleaseMedia(gLeft);
-    ReleaseMedia(gRight);
-    ReleaseMedia(gRelease);
+    sdlHelper.ReleaseMedia(gUp);
+    sdlHelper.ReleaseMedia(gDown);
+    sdlHelper.ReleaseMedia(gLeft);
+    sdlHelper.ReleaseMedia(gRight);
+    sdlHelper.ReleaseMedia(gRelease);
 
-    Close(gWindow);
+    sdlHelper.Close();
+    SDL_Quit();
 
     return 0;
 }
