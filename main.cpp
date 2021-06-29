@@ -88,8 +88,14 @@ int main( int argc, char* args[] )
             }
         }
         
-        //应用图像
-        SDL_BlitSurface( gHelloWorld, NULL, sdlHelper.screenSurface, NULL );
+        // //应用图像
+        // SDL_BlitSurface( gHelloWorld, NULL, sdlHelper.screenSurface, NULL );
+
+        for(int y = 0; y < sdlHelper.screenSurface->h; y++){
+            for(int x = 0; x < sdlHelper.screenSurface->w; x++){
+                ((int*)(sdlHelper.screenSurface->pixels))[50] = 0xFFFF0000;
+            }
+        }
 
         //更新surface
         SDL_UpdateWindowSurface(sdlHelper.window);
