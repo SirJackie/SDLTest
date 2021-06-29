@@ -1,5 +1,4 @@
 #include "SDLHelper.h"
-#include <SDL.h>
 
 SDL_Window* CreateWindow(int leftMargin, int topMargin, int width, int height, const char* title)
 {

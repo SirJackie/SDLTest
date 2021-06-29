@@ -1,7 +1,6 @@
 #ifndef __CSBF_LinuxSimuLayer_SDLHelper__
 #define __CSBF_LinuxSimuLayer_SDLHelper__
 
-#include <stdio.h>
 #include <SDL.h>
 
 
