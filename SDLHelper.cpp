@@ -60,6 +60,7 @@ void LSM_SDLHelper::ReleaseMedia(SDL_Surface* media){
 void LSM_SDLHelper::Close()
 {
     SDL_DestroyWindow(window);
+    SDL_Quit();
 }
 
 void LSM_SDLHelper::BlitSurfaceHere(SDL_Surface* from){
