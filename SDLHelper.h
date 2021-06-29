@@ -18,6 +18,7 @@ public:
     SDL_Surface* LoadMedia(const char* bmpAddress);
     void ReleaseMedia(SDL_Surface* media);
     void Close();
+    void BlitSurfaceHere(SDL_Surface* from);
 };
 
 #endif

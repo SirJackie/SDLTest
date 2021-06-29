@@ -61,3 +61,7 @@ void LSM_SDLHelper::Close()
 {
     SDL_DestroyWindow(window);
 }
+
+void LSM_SDLHelper::BlitSurfaceHere(SDL_Surface* from){
+    SDL_BlitSurface( from, NULL, screenSurface, NULL );
+}
