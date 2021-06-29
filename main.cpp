@@ -125,11 +125,11 @@ int main( int argc, char* args[] )
     }
 
     //加载多媒体文件
-    gUp = loadMedia("Up.bmp");
-    gDown = loadMedia("Down.bmp");
-    gLeft = loadMedia("Left.bmp");
-    gRight = loadMedia("Right.bmp");
-    gRelease = loadMedia("hw.bmp");
+    gUp = loadMedia("./Bitmaps/Up.bmp");
+    gDown = loadMedia("./Bitmaps/Down.bmp");
+    gLeft = loadMedia("./Bitmaps/Left.bmp");
+    gRight = loadMedia("./Bitmaps/Right.bmp");
+    gRelease = loadMedia("./Bitmaps/hw.bmp");
 
     gHelloWorld = gRelease;
 
