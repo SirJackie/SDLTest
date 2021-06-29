@@ -25,6 +25,11 @@ SDL_Surface* gScreenSurface = NULL;
 
 //我们将会载入并在屏幕上展示的图片
 SDL_Surface* gHelloWorld = NULL;
+SDL_Surface* gUp = NULL;
+SDL_Surface* gDown = NULL;
+SDL_Surface* gLeft = NULL;
+SDL_Surface* gRight = NULL;
+SDL_Surface* gRelease = NULL;
 
 bool init()
 {
@@ -56,28 +61,34 @@ bool init()
     return success;
 }
 
-#define BMP_ADDR "hw.bmp"
-
-bool loadMedia()
+SDL_Surface* loadMedia(const char* bmpAddress)
 {
-    //用来标记载入成功的变量
-    bool success = true;
-
     //载入 splash image
-    gHelloWorld = SDL_LoadBMP(BMP_ADDR);
-    if( gHelloWorld == NULL )
+    SDL_Surface* media = SDL_LoadBMP(bmpAddress);
+    if( media == NULL )
     {
-        printf( "Unable to load image %s! SDL Error: %s\n", BMP_ADDR, SDL_GetError() );
-        success = false;
+        printf( "Unable to load image %s! SDL Error: %s\n", bmpAddress, SDL_GetError() );
     }
 
-    return success;
+    return media;
+}
+
+void releaseMedia(){
+    SDL_FreeSurface( gHelloWorld );
+    gHelloWorld = NULL;
 }
 
 void close()
 {
     //释放 surface
-    SDL_FreeSurface( gHelloWorld );
+    SDL_FreeSurface( gUp );
+    gUp = NULL;
+    SDL_FreeSurface( gDown );
+    gUp = NULL;
+    SDL_FreeSurface( gLeft );
+    gUp = NULL;
+    SDL_FreeSurface( gRight );
+    gUp = NULL;
     gHelloWorld = NULL;
 
     //销毁窗口
@@ -88,13 +99,23 @@ void close()
     SDL_Quit();
 }
 
+//主循环标志变量
+bool quit = false;
+
+//事件handler
+SDL_Event e;
+
+#define RELEASE 0
+#define UP      1
+#define DOWN    2
+#define LEFT    3
+#define RIGHT   4
+typedef int KeyboardState;
+KeyboardState kb = RELEASE;
+
 int main( int argc, char* args[] )
 {
-    //主循环标志变量
-    bool quit = false;
 
-    //事件handler
-    SDL_Event e;
 
     //初始化 SDL 并创建窗口
     if( !init() )
@@ -104,11 +125,13 @@ int main( int argc, char* args[] )
     }
 
     //加载多媒体文件
-    if( !loadMedia() )
-    {
-        printf( "Failed to load media!\n" );
-        return 0;
-    }
+    gUp = loadMedia("Up.bmp");
+    gDown = loadMedia("Down.bmp");
+    gLeft = loadMedia("Left.bmp");
+    gRight = loadMedia("Right.bmp");
+    gRelease = loadMedia("hw.bmp");
+
+    gHelloWorld = gRelease;
 
     //当程序正在运行
     while( !quit )
@@ -121,7 +144,43 @@ int main( int argc, char* args[] )
             {
                 quit = true;
             }
+
+            //如果用户按了按键
+            if( e.type == SDL_KEYDOWN )
+            {
+                //依据相应的按键选择surface
+                switch( e.key.keysym.sym )
+                {
+                case SDLK_UP:
+                    kb = UP;
+                    gHelloWorld = gUp;
+                    break;
+
+                case SDLK_DOWN:
+                    kb = DOWN;
+                    gHelloWorld = gDown;
+                    break;
+
+                case SDLK_LEFT:
+                    kb = LEFT;
+                    gHelloWorld = gLeft;
+                    break;
+
+                case SDLK_RIGHT:
+                    kb = RIGHT;
+                    gHelloWorld = gRight;
+                    break;
+
+                default:
+                    break;
+                }
+            }
+
+            if(e.type == SDL_KEYUP){
+                gHelloWorld = gRelease;
+            }
         }
+        
         //应用图像
         SDL_BlitSurface( gHelloWorld, NULL, gScreenSurface, NULL );
 
