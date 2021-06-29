@@ -5,24 +5,9 @@ LSM_SDLHelper::LSM_SDLHelper(){
     window = NULL;
     screenSurface = NULL;
 
-    // Make sure we have the right to get resolution (important!)
-    system("sudo chmod 777 /dev/fb0");
+    GetResolution();
 
-    // Get Resolution
-    // SDL_GetDesktopDisplayMode(0, &m);  // This SDL API is unstable
-    int fd;
-    struct fb_var_screeninfo fb_var;
-
-    fd = open("/dev/fb0",O_RDWR);
-    ioctl (fd,FBIOGET_VSCREENINFO,&fb_var);
-    i32 w = fb_var.xres;
-    i32 h = fb_var.yres;
-    i32 bpp = fb_var.bits_per_pixel;
-    printf ("Framebuffer %d*%d-%dbpp\n",w,h,bpp);
-
-    screenWidth = w;
-    screenHeight = h;
-
+    // Calculate Window Size
     unit = screenHeight / 30;
 
 	windowHeight = 26 * unit;
@@ -39,10 +24,21 @@ LSM_SDLHelper::LSM_SDLHelper(){
 }
 
 void LSM_SDLHelper::GetResolution(){
-    ;
+    // Make sure we have the right to get resolution (important!)
+    system("sudo chmod 777 /dev/fb0");
+
+    // Get Resolution using Framebuffer in Linux
+    i32 fd;
+    struct fb_var_screeninfo fb_var;
+    fd = open("/dev/fb0",O_RDWR);
+    ioctl(fd,FBIOGET_VSCREENINFO,&fb_var);
+    screenWidth = fb_var.xres;
+    screenHeight = fb_var.yres;
+    i32 bpp = fb_var.bits_per_pixel;
+    printf("Framebuffer %d * %d - %dbpp\n", screenWidth, screenHeight, bpp);
 }
 
-void LSM_SDLHelper::CreateWindow(const char* title){
+void LSM_SDLHelper::CreateWindow(const i8* title){
     window = NULL;
     screenSurface = NULL;
 
@@ -54,7 +50,7 @@ void LSM_SDLHelper::CreateWindow(const char* title){
     // 创建 Window
     window = SDL_CreateWindow
     (
-        title,
+        (const char*)title,
         leftMargin,
         topMargin,
         windowWidth,
@@ -81,13 +77,13 @@ void LSM_SDLHelper::Minimize(){
     SDL_MinimizeWindow(window);
 }
 
-SDL_Surface* LSM_SDLHelper::LoadMedia(const char* bmpAddress)
+SDL_Surface* LSM_SDLHelper::LoadMedia(const i8* bmpAddress)
 {
     //载入 splash image
-    SDL_Surface* media = SDL_LoadBMP(bmpAddress);
+    SDL_Surface* media = SDL_LoadBMP((const char*)bmpAddress);
     if( media == NULL )
     {
-        printf( "Unable to load image %s! SDL Error: %s\n", bmpAddress, SDL_GetError() );
+        printf( "Unable to load image %s! SDL Error: %s\n", (const char*)bmpAddress, SDL_GetError() );
     }
 
     return media;

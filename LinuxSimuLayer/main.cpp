@@ -14,7 +14,7 @@ SDL_Event e;
 int main( int argc, char* args[] )
 {
     // sdlHelper = LSM_SDLHelper();
-    sdlHelper.CreateWindow("Test");
+    sdlHelper.CreateWindow((const i8*)"Test");
 
     //当程序正在运行
     while(!quit)

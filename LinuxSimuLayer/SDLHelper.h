@@ -35,11 +35,11 @@ public:
     
     LSM_SDLHelper();
     void GetResolution();
-    void CreateWindow(const char* title);
+    void CreateWindow(const i8* title);
     void Maximize();
     void Minimize();
 
-    SDL_Surface* LoadMedia(const char* bmpAddress);
+    SDL_Surface* LoadMedia(const i8* bmpAddress);
     void ReleaseMedia(SDL_Surface* media);
     void Close();
     void BlitSurfaceHere(SDL_Surface* from);
