@@ -1,13 +1,12 @@
-# -I /usr/include/SDL2     Header Files
-# -D_REENTRANT
-# -l SDL2
+sdltest:main.o
+	g++ main.o -o sdltest `sdl2-config --libs`
 
-sdltest:main.cpp
-	g++ main.cpp -o sdltest -I /usr/include/SDL2 -D_REENTRANT -l SDL2
+main.o:main.cpp
+	g++ -c main.cpp -o main.o `sdl2-config --cflags`
 
 .PHONY:
 clear:
-	rm -rf sdltest
+	rm -rf sdltest main.o
 
 run:
 	make
