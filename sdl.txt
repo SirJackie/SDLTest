@@ -1,0 +1,30 @@
+sudo apt-get install libsdl2-2.0
+ 
+sudo apt-get install libsdl2-dev
+ 
+sudo apt-get install libsdl2-mixer-dev
+ 
+sudo apt-get install libsdl2-image-dev
+ 
+sudo apt-get install libsdl2-ttf-dev
+ 
+sudo apt-get install libsdl2-gfx-dev
+
+gcc -o myprogram myprogram.c `sdl2-config --cflags --libs`
+
+g++ -o sdltest sdltest.cpp `sdl2-config --cflags --libs`
+
+SDL2入门教程（01_hello_SDL）
+https://blog.csdn.net/qq_31024569/article/details/77884072
+
+SDL2入门教程（02_Getting an Image on the Screen）
+https://blog.csdn.net/qq_31024569/article/details/77896974?utm_source=blogxgwz2
+
+SDL2入门教程（03_Event Driven Programming）
+https://blog.csdn.net/qq_31024569/article/details/78118007
+
+SDL2入门教程（04_Key Presses）
+https://blog.csdn.net/qq_31024569/article/details/78123629
+
+SDL2入门教程（05_Optimized Surface Loading and Soft Stretching）
+https://blog.csdn.net/qq_31024569/article/details/78128166
