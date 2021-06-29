@@ -9,9 +9,15 @@ LSM_SDLHelper sdlHelper;
 
 bool quit = false;
 SDL_Event e;
+SDL_DisplayMode* dmode = NULL;
 
 int main( int argc, char* args[] )
 {
+    printf("%d\n", SDL_GetDesktopDisplayMode(SDL_GetNumVideoDrivers(), dmode));
+
+    printf("%d\n", SDL_GetNumVideoDrivers());
+    printf("Width: %d; Height: %d;\n", dmode->w, dmode->h);
+
     sdlHelper.CreateWindow(10, 10, SCREEN_WIDTH, SCREEN_HEIGHT, "Test");
 
     //当程序正在运行
