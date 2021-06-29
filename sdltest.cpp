@@ -109,13 +109,25 @@ int main( int argc, char* args[] )
         printf( "Failed to load media!\n" );
         return 0;
     }
-    
-    //应用这个图像
-    SDL_BlitSurface( gHelloWorld, NULL, gScreenSurface, NULL );
-    //更新surface
-    SDL_UpdateWindowSurface( gWindow );
-    //保持窗口两秒
-    SDL_Delay( 2000 );
+
+    //当程序正在运行
+    while( !quit )
+    {
+        //处理队列中的事件
+        while( SDL_PollEvent( &e ) != 0 )
+        {
+            //用户选择退出
+            if( e.type == SDL_QUIT )
+            {
+                quit = true;
+            }
+        }
+        //应用图像
+        SDL_BlitSurface( gHelloWorld, NULL, gScreenSurface, NULL );
+
+        //更新surface
+        SDL_UpdateWindowSurface( gWindow );
+    }
 
     //释放资源并关闭SDL
     close();
