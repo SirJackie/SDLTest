@@ -4,6 +4,19 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <SDL.h>
+
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <fcntl.h>
+#include <linux/fb.h>
+#include <sys/mman.h>
+#include <math.h>
+
+// Support iotcl()
+#include <unistd.h>        /* System V */
+#include <sys/ioctl.h>     /* BSD and Linux */
+#include <stropts.h>       /* XSI STREAMS */
+
 #include "../CrossBufferLayer/BasicDataTypeDeclarations.h"
 
 

@@ -5,31 +5,37 @@ LSM_SDLHelper::LSM_SDLHelper(){
     window = NULL;
     screenSurface = NULL;
 
-    SDL_DisplayMode m;
-
     // Make sure we have the right to get resolution (important!)
     system("sudo chmod 777 /dev/fb0");
 
     // Get Resolution
-    SDL_GetDesktopDisplayMode(0, &m);
+    // SDL_GetDesktopDisplayMode(0, &m);  // This SDL API is unstable
+    int fd;
+    struct fb_var_screeninfo fb_var;
 
-    screenWidth = m.w;
-    screenHeight = m.h;
+    fd = open("/dev/fb0",O_RDWR);
+    ioctl (fd,FBIOGET_VSCREENINFO,&fb_var);
+    i32 w = fb_var.xres;
+    i32 h = fb_var.yres;
+    i32 bpp = fb_var.bits_per_pixel;
+    printf ("Framebuffer %d*%d-%dbpp\n",w,h,bpp);
 
-    windowWidth = 640;
-    windowHeight = 480;
-    leftMargin = 10;
-    topMargin = 10;
+    screenWidth = w;
+    screenHeight = h;
 
-    printf("%d, %d\n", m.w, m.h);
+    unit = screenHeight / 30;
 
-    // unit = screenHeight / 30;
+	windowHeight = 26 * unit;
+	windowWidth = windowHeight / 9 * 16;
 
-	// windowHeight = 26 * unit;
-	// windowWidth = CS_iclamp(0, windowHeight / 9 * 16, screenWidth - 10);
+	leftMargin = (screenWidth - windowWidth) / 2;
+	topMargin = (screenHeight - windowHeight) / 2;
 
-	// leftMargin = (screenWidth - windowWidth) / 2;
-	// topMargin = (screenHeight - windowHeight) / 2;
+    // Deepin Fix
+    topMargin -= 50;
+    if(topMargin <= 0){
+        topMargin = 10;
+    }
 }
 
 void LSM_SDLHelper::GetResolution(){
