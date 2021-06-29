@@ -1,12 +1,15 @@
-sdltest:main.o
+sdltest:main.o SDLHelper.o
 	g++ main.o -o sdltest `sdl2-config --libs`
 
 main.o:main.cpp
 	g++ -c main.cpp -o main.o `sdl2-config --cflags`
 
+SDLHelper.o:SDLHelper.cpp
+	g++ -c SDLHelper.cpp -o SDLHelper.o `sdl2-config --cflags`
+
 .PHONY:
 clear:
-	rm -rf sdltest main.o
+	rm -rf sdltest main.o SDLHelper.o
 
 run:
 	make
