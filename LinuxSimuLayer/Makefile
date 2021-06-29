@@ -12,7 +12,7 @@ BasicDataTypeDeclarations.o:../CrossBufferLayer/BasicDataTypeDeclarations.cpp
 
 .PHONY:
 clear:
-	rm -rf sdltest main.o SDLHelper.o
+	rm -rf sdltest main.o SDLHelper.o BasicDataTypeDeclarations.o
 
 run:
 	make
