@@ -15,6 +15,9 @@ public:
     (
         int leftMargin, int topMargin, int width, int height, const char* title
     );
+    void Maximize();
+    void Minimize();
+
     SDL_Surface* LoadMedia(const char* bmpAddress);
     void ReleaseMedia(SDL_Surface* media);
     void Close();

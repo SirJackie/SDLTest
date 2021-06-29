@@ -41,6 +41,14 @@ void LSM_SDLHelper::CreateWindow
     }
 }
 
+void LSM_SDLHelper::Maximize(){
+    SDL_MaximizeWindow(window);
+}
+
+void LSM_SDLHelper::Minimize(){
+    SDL_MinimizeWindow(window);
+}
+
 SDL_Surface* LSM_SDLHelper::LoadMedia(const char* bmpAddress)
 {
     //载入 splash image
