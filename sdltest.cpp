@@ -90,28 +90,32 @@ void close()
 
 int main( int argc, char* args[] )
 {
+    //主循环标志变量
+    bool quit = false;
+
+    //事件handler
+    SDL_Event e;
+
     //初始化 SDL 并创建窗口
     if( !init() )
     {
         printf( "Failed to initialize!\n" );
+        return 0;
     }
-    else
+
+    //加载多媒体文件
+    if( !loadMedia() )
     {
-        //加载多媒体文件
-        if( !loadMedia() )
-        {
-            printf( "Failed to load media!\n" );
-        }
-        else
-        {
-            //应用这个图像
-            SDL_BlitSurface( gHelloWorld, NULL, gScreenSurface, NULL );
-            //更新surface
-            SDL_UpdateWindowSurface( gWindow );
-            //保持窗口两秒
-            SDL_Delay( 2000 );
-        }
+        printf( "Failed to load media!\n" );
+        return 0;
     }
+    
+    //应用这个图像
+    SDL_BlitSurface( gHelloWorld, NULL, gScreenSurface, NULL );
+    //更新surface
+    SDL_UpdateWindowSurface( gWindow );
+    //保持窗口两秒
+    SDL_Delay( 2000 );
 
     //释放资源并关闭SDL
     close();

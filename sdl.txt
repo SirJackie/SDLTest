@@ -28,3 +28,6 @@ https://blog.csdn.net/qq_31024569/article/details/78123629
 
 SDL2入门教程（05_Optimized Surface Loading and Soft Stretching）
 https://blog.csdn.net/qq_31024569/article/details/78128166
+
+Total Tutorials (in English)
+https://lazyfoo.net/tutorials/SDL/index.php
