@@ -1,23 +1,26 @@
-sdltest:main.o SDLHelper.o BasicDataTypeDeclarations.o
-	g++ main.o SDLHelper.o -o sdltest `sdl2-config --libs`
+Target = CrossBufferForLinux
+Objects = main.o SDLHelper.o ../CrossBufferLayer/BasicDataTypeDeclarations.o
 
-main.o:main.cpp
-	g++ -c main.cpp -o main.o `sdl2-config --cflags`
+TargetGeneratingArguments = `sdl2-config --libs`
+ObjectGeneratingArguments = `sdl2-config --cflags`
 
-SDLHelper.o:SDLHelper.cpp
-	g++ -c SDLHelper.cpp -I ../CrossBufferLayer/BasicDataTypeDeclarations.h -o SDLHelper.o `sdl2-config --cflags` 
+Compiler := g++
+RMRF := rm -rf
 
-BasicDataTypeDeclarations.o:../CrossBufferLayer/BasicDataTypeDeclarations.cpp
-	g++ -c ../CrossBufferLayer/BasicDataTypeDeclarations.cpp -o BasicDataTypeDeclarations.o
+$(Target):$(Objects)
+	$(Compiler) $^ -o $@ $(TargetGeneratingArguments)
+
+%.o:%.cpp
+	$(Compiler) -c $^ -o $@ $(ObjectGeneratingArguments)
 
 .PHONY:
 clear:
-	rm -rf sdltest main.o SDLHelper.o BasicDataTypeDeclarations.o
+	$(RMRF) $(Target) $(Objects)
 
 run:
 	make
-	chmod 777 sdltest
-	./sdltest
+	chmod 777 $(Target)
+	./$(Target)
 
 installDependencies:
 	sudo apt-get install g++
