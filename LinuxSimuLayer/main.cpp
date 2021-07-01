@@ -75,6 +75,38 @@ int main( int argc, char* args[] )
             Update(fb, kb, thisTime - lastTime);  // Call the Update() in Main.h
         }
 
+
+        i32* pBitsNow = (int*)sdlHelper.screenSurface->pixels;
+        i32  bufferPitch = sdlHelper.screenSurface->pitch / 4;
+        i8*  pRed = fb.redBuffer;
+        i8*  pGreen = fb.greenBuffer;
+        i8*  pBlue = fb.blueBuffer;
+
+        for (i32 y = 0; y < fb.height; y++) {
+            for (i32 x = 0; x < fb.width; x++) {
+                *pBitsNow =
+                    (i32)
+                    (
+                        (0xff << 24) |
+                        (((*pRed) & 0xff) << 16) |
+                        (((*pGreen) & 0xff) << 8) |
+                        ((*pBlue) & 0xff)
+                        );
+                pRed++;
+                pGreen++;
+                pBlue++;
+                pBitsNow++;
+            }
+            pBitsNow += bufferPitch - fb.width;
+        }
+
+        // for(int y = 0; y < sdlHelper.screenSurface->h; y++){
+        //     for(int x = 0; x < sdlHelper.screenSurface->w; x++){
+        //         pBitsNow[y * bufferPitch + x] = 0xFFFF0000;
+        //     }
+        // }
+
+
         // Release Back Buffer and Swap it as the FrontBuffer
         SDL_UnlockSurface(sdlHelper.screenSurface);
 
