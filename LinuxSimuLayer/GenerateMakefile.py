@@ -27,13 +27,24 @@ $(Target):$(Objects)
 	$(Compiler) -c $^ -o $@ $(ObjectGeneratingArguments)
 
 .PHONY:
-clear:
+generateMyself:
+	python GenerateMakefile.py
+
+clear_o:
 	$(RMRF) $(Target) $(Objects)
 
-run:
+run_o:
 	make
 	chmod 777 $(Target)
 	./$(Target)
+
+clear:
+	make generateMyself
+	make clear_o
+
+run:
+	make generateMyself
+	make run_o
 
 installDependencies:
 	sudo apt-get install g++
