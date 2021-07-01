@@ -1,5 +1,12 @@
+# Target and Object Declarations
 Target = CrossBufferForLinux
-Objects = main.o SDLHelper.o ../CrossBufferLayer/BasicDataTypeDeclarations.o
+Objects = main.o
+Objects += SDLHelper.o
+Objects += ../CrossBufferLayer/BasicDataTypeDeclarations.o
+Objects += ../CrossBufferLayer/FontSupport.o
+Objects += ../CrossBufferLayer/FPSCalculator.o
+Objects += ../CrossBufferLayer/KeyboardSupport.o
+Objects += ../CrossBufferLayer/FrameBuffer.o
 
 TargetGeneratingArguments = `sdl2-config --libs`
 ObjectGeneratingArguments = `sdl2-config --cflags`
